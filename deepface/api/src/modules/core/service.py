@@ -1,6 +1,6 @@
 # built-in dependencies
 import traceback
-from typing import Optional, Union
+from typing import Optional, Union, IO
 
 # 3rd party dependencies
 import numpy as np
@@ -15,8 +15,16 @@ logger = Logger()
 # pylint: disable=broad-except
 
 def extract_faces(
-    img_path: Union[str, np.ndarray],
-    anti_spoofing: bool,
+    img_path: Union[str, np.ndarray, IO[bytes]],
+    detector_backend: str = "opencv",
+    enforce_detection: bool = True,
+    align: bool = True,
+    expand_percentage: int = 0,
+    grayscale: bool = False,
+    color_face: str = "rgb",
+    normalize_face: bool = True,
+    anti_spoofing: bool = False,
+    max_faces: Optional[int] = None,
 ):
     try:
         result = DeepFace.extract_faces(
