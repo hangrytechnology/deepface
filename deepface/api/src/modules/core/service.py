@@ -37,7 +37,7 @@ def extract_faces(
             normalize_face=normalize_face,
             anti_spoofing=anti_spoofing,
         )
-        return result
+        return result, 200
     except Exception as err:
         tb_str = traceback.format_exc()
         logger.error(str(err))
@@ -65,7 +65,7 @@ def represent(
             max_faces=max_faces,
         )
         result["results"] = embedding_objs
-        return result
+        return result, 200
     except Exception as err:
         tb_str = traceback.format_exc()
         logger.error(str(err))
@@ -94,7 +94,7 @@ def verify(
             enforce_detection=enforce_detection,
             anti_spoofing=anti_spoofing,
         )
-        return obj
+        return obj, 200
     except Exception as err:
         tb_str = traceback.format_exc()
         logger.error(str(err))
@@ -122,7 +122,7 @@ def analyze(
             anti_spoofing=anti_spoofing,
         )
         result["results"] = demographies
-        return result
+        return result, 200
     except Exception as err:
         tb_str = traceback.format_exc()
         logger.error(str(err))

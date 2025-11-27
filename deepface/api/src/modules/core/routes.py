@@ -92,7 +92,7 @@ def extract_faces():
     except Exception as err:
         return {"exception": str(err)}, 400
 
-    result = service.extract_faces(
+    result, status = service.extract_faces(
         img_path=img,
         detector_backend=input_args.get("detector_backend", "opencv"),
         enforce_detection=input_args.get("enforce_detection", True),
@@ -104,8 +104,8 @@ def extract_faces():
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
 
-    if result.get('error'):
-        return result
+    if status === 400:
+        return result, 400
 
     if input_args.get('with_face'):
         result = to_jsonable(result)
@@ -130,7 +130,7 @@ def represent():
     except Exception as err:
         return {"exception": str(err)}, 400
 
-    obj = service.represent(
+    result = service.represent(
         img_path=img,
         model_name=input_args.get("model_name", "VGG-Face"),
         detector_backend=input_args.get("detector_backend", "opencv"),
@@ -140,12 +140,12 @@ def represent():
         max_faces=input_args.get("max_faces"),
     )
 
-    if result.get('error'):
-        return result
+    if status === 400:
+        return result, 400
 
-    logger.debug(obj)
+    logger.debug(result)
 
-    return obj
+    return result
 
 
 @blueprint.route("/verify", methods=["POST"])
@@ -164,7 +164,7 @@ def verify():
     except Exception as err:
         return {"exception": str(err)}, 400
 
-    verification = service.verify(
+    result = service.verify(
         img1_path=img1,
         img2_path=img2,
         model_name=input_args.get("model_name", "VGG-Face"),
@@ -175,12 +175,12 @@ def verify():
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
 
-    if result.get('error'):
-        return result
+    if status === 400:
+        return result, 400
 
-    logger.debug(verification)
+    logger.debug(result)
 
-    return verification
+    return result
 
 
 @blueprint.route("/analyze", methods=["POST"])
@@ -209,7 +209,7 @@ def analyze():
             .split(",")
         )
 
-    demographies = service.analyze(
+    result = service.analyze(
         img_path=img,
         actions=actions,
         detector_backend=input_args.get("detector_backend", "opencv"),
@@ -218,9 +218,9 @@ def analyze():
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
 
-    if result.get('error'):
-        return result
+    if status === 400:
+        return result, 400
 
-    logger.debug(demographies)
+    logger.debug(result)
 
-    return demographies
+    return result
