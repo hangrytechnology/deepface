@@ -14,6 +14,21 @@ logger = Logger()
 
 # pylint: disable=broad-except
 
+def extract_faces(
+    img_path: Union[str, np.ndarray],
+    anti_spoofing: bool,
+):
+    try:
+        result = DeepFace.extract_faces(
+            img_path=img_path,
+            anti_spoofing=anti_spoofing,
+        )
+        return result
+    except Exception as err:
+        tb_str = traceback.format_exc()
+        logger.error(str(err))
+        logger.error(tb_str)
+        return {"error": f"Exception while representing: {str(err)} - {tb_str}"}, 400
 
 def represent(
     img_path: Union[str, np.ndarray],

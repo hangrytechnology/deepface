@@ -69,6 +69,25 @@ def extract_image_from_request(img_key: str) -> Union[str, np.ndarray]:
     # If neither JSON nor file input is present
     raise ValueError(f"'{img_key}' not found in request in either json or form data")
 
+@blueprint.route("/extract_faces", methods=["POST"])
+def extract_faces():
+    input_args = (request.is_json and request.get_json()) or (
+        request.form and request.form.to_dict()
+    )
+
+    try:
+        img = extract_image_from_request("img")
+    except Exception as err:
+        return {"exception": str(err)}, 400
+
+    obj = service.represent(
+        img_path=img,
+        anti_spoofing=input_args.get("anti_spoofing", False),
+    )
+
+    logger.debug(obj)
+
+    return obj
 
 @blueprint.route("/represent", methods=["POST"])
 def represent():
