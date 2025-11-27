@@ -104,7 +104,7 @@ def extract_faces():
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
 
-    if status === 400:
+    if status == 400:
         return result, 400
 
     if input_args.get('with_face'):
@@ -140,7 +140,7 @@ def represent():
         max_faces=input_args.get("max_faces"),
     )
 
-    if status === 400:
+    if status == 400:
         return result, 400
 
     logger.debug(result)
@@ -175,7 +175,7 @@ def verify():
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
 
-    if status === 400:
+    if status == 400:
         return result, 400
 
     logger.debug(result)
@@ -218,7 +218,7 @@ def analyze():
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
 
-    if status === 400:
+    if status == 400:
         return result, 400
 
     logger.debug(result)
