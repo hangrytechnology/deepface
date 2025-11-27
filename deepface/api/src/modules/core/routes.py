@@ -130,7 +130,7 @@ def represent():
     except Exception as err:
         return {"exception": str(err)}, 400
 
-    result = service.represent(
+    result, status = service.represent(
         img_path=img,
         model_name=input_args.get("model_name", "VGG-Face"),
         detector_backend=input_args.get("detector_backend", "opencv"),
@@ -164,7 +164,7 @@ def verify():
     except Exception as err:
         return {"exception": str(err)}, 400
 
-    result = service.verify(
+    result, status = service.verify(
         img1_path=img1,
         img2_path=img2,
         model_name=input_args.get("model_name", "VGG-Face"),
@@ -209,7 +209,7 @@ def analyze():
             .split(",")
         )
 
-    result = service.analyze(
+    result, status = service.analyze(
         img_path=img,
         actions=actions,
         detector_backend=input_args.get("detector_backend", "opencv"),
