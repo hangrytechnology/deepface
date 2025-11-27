@@ -80,7 +80,7 @@ def extract_faces():
     except Exception as err:
         return {"exception": str(err)}, 400
 
-    obj = service.represent(
+    obj = service.extract_faces(
         img_path=img,
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
