@@ -22,6 +22,18 @@ blueprint = Blueprint("routes", __name__)
 def home():
     return f"<h1>Welcome to DeepFace API v{DeepFace.__version__}!</h1>"
 
+def to_jsonable(obj):
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, (np.float32, np.float64)):
+        return float(obj)
+    if isinstance(obj, (np.int32, np.int64)):
+        return int(obj)
+    if isinstance(obj, dict):
+        return {k: to_jsonable(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [to_jsonable(v) for v in obj]
+    return obj
 
 def extract_image_from_request(img_key: str) -> Union[str, np.ndarray]:
     """
@@ -80,14 +92,28 @@ def extract_faces():
     except Exception as err:
         return {"exception": str(err)}, 400
 
-    obj = service.extract_faces(
+    result = service.extract_faces(
         img_path=img,
+        detector_backend=input_args.get("detector_backend", "opencv"),
+        enforce_detection=input_args.get("enforce_detection", True),
+        align=input_args.get("align", True),
+        expand_percentage=input_args.get("expand_percentage", 0),
+        grayscale=input_args.get("grayscale", False),
+        color_face=input_args.get("color_face", "rgb"),
+        normalize_face=input_args.get("normalize_face", False),
         anti_spoofing=input_args.get("anti_spoofing", False),
+        max_faces=input_args.get("max_faces", None),
     )
 
-    logger.debug(obj)
+    if input_args.get('with_face'):
+        result = to_jsonable(result)
+    else:
+        for item in result:
+            item.pop("face", None)  # None avoids KeyError if missing
 
-    return obj
+    logger.debug(result)
+
+    return result
 
 @blueprint.route("/represent", methods=["POST"])
 def represent():
