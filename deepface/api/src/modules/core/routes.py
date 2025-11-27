@@ -109,7 +109,7 @@ def extract_faces():
     else:
         result = [
             {k: v for k, v in item.items() if k != "face"}
-            for item in data
+            for item in result
         ]
 
     logger.debug(result)
