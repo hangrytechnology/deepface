@@ -102,14 +102,15 @@ def extract_faces():
         color_face=input_args.get("color_face", "rgb"),
         normalize_face=input_args.get("normalize_face", False),
         anti_spoofing=input_args.get("anti_spoofing", False),
-        max_faces=input_args.get("max_faces", None),
     )
 
     if input_args.get('with_face'):
         result = to_jsonable(result)
     else:
-        for item in result:
-            item.pop("face", None)  # None avoids KeyError if missing
+        result = [
+            {k: v for k, v in item.items() if k != "face"}
+            for item in data
+        ]
 
     logger.debug(result)
 

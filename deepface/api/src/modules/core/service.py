@@ -24,7 +24,6 @@ def extract_faces(
     color_face: str = "rgb",
     normalize_face: bool = True,
     anti_spoofing: bool = False,
-    max_faces: Optional[int] = None,
 ):
     try:
         result = DeepFace.extract_faces(
@@ -37,7 +36,6 @@ def extract_faces(
             color_face=color_face,
             normalize_face=normalize_face,
             anti_spoofing=anti_spoofing,
-            max_faces=max_faces,
         )
         return result
     except Exception as err:
