@@ -42,7 +42,7 @@ def extract_faces(
         tb_str = traceback.format_exc()
         logger.error(str(err))
         logger.error(tb_str)
-        return {"error": f"Exception while representing: {str(err)} - {tb_str}"}, 400
+        return {"error": f"Exception while extracting: {str(err)} - {tb_str}"}, 400
 
 def represent(
     img_path: Union[str, np.ndarray],

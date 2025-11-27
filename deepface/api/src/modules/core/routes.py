@@ -104,6 +104,9 @@ def extract_faces():
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
 
+    if result.get('error'):
+        return result
+
     if input_args.get('with_face'):
         result = to_jsonable(result)
     else:
@@ -137,6 +140,9 @@ def represent():
         max_faces=input_args.get("max_faces"),
     )
 
+    if result.get('error'):
+        return result
+
     logger.debug(obj)
 
     return obj
@@ -168,6 +174,9 @@ def verify():
         enforce_detection=input_args.get("enforce_detection", True),
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
+
+    if result.get('error'):
+        return result
 
     logger.debug(verification)
 
@@ -208,6 +217,9 @@ def analyze():
         align=input_args.get("align", True),
         anti_spoofing=input_args.get("anti_spoofing", False),
     )
+
+    if result.get('error'):
+        return result
 
     logger.debug(demographies)
 
