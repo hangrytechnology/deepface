@@ -82,6 +82,7 @@ def verify(
     enforce_detection: bool,
     align: bool,
     anti_spoofing: bool,
+    threshold: Optional[float] = None,
 ):
     try:
         obj = DeepFace.verify(
@@ -93,6 +94,7 @@ def verify(
             align=align,
             enforce_detection=enforce_detection,
             anti_spoofing=anti_spoofing,
+            threshold=threshold,
         )
         return obj, 200
     except Exception as err:
