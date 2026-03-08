@@ -102,7 +102,6 @@ def extract_faces():
         color_face=input_args.get("color_face", "rgb"),
         normalize_face=input_args.get("normalize_face", False),
         anti_spoofing=input_args.get("anti_spoofing", False),
-        threshold=input_args.get("threshold", None),
     )
 
     if status == 400:
@@ -174,6 +173,7 @@ def verify():
         align=input_args.get("align", True),
         enforce_detection=input_args.get("enforce_detection", True),
         anti_spoofing=input_args.get("anti_spoofing", False),
+        threshold=input_args.get("threshold", None),
     )
 
     if status == 400:
